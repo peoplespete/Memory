@@ -37,6 +37,7 @@ function clickTile(){
     var position = $(this).data('position');
     $(this).toggleClass('selected');
     var tileValue = db.game.squares[position];
+    $(this).text(tileValue);
     if(db.game.tile1){
       db.game.tile2 = tileValue;
       if(db.game.tile1 === db.game.tile2){
