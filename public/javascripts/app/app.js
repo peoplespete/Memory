@@ -21,9 +21,10 @@ function clickNewGame(){
   var numOfTiles = parseInt($('input[name="numOfTiles"]').val());
   var squares = _.range(1,numOfTiles+1);
   console.log(squares);
+  db.game.squaresRemaining = squares;
   squares = squares.concat(squares);
   db.game.squares = _.shuffle(squares);
-  console.log(player,numOfTiles,squares);
+  console.log(db.game.squares);
   $('#gameHeader').text('Good Luck, ' + player);
   $('#gameForm').fadeOut('slow');
   $('#gameDisplay').show();
@@ -49,8 +50,12 @@ function clickTile(){
       if(db.game.tile1.value === db.game.tile2.value){
         $('.selected').addClass('completed');
         $('.selected').removeClass('selected');
+        console.log(db.game.squares[db.game.tile1.position-1]);
+        db.game.tempSquares = db.game.squaresRemaining;
+        _.pull(db.game.squaresRemaining,  db.game.squares[db.game.tile1.position-1]);
         clearBothTiles();
         db.game.numSelected = 0;
+        console.log(db.game.remainingSquares);
         checkForCompletion();
       }else{
         var timer = setTimeout(function(){
@@ -80,7 +85,7 @@ function clearBothTiles(){
 
 function checkForCompletion(){
   if($('.completed').length === db.game.squares.length-2){
-    $('.tile:not(.completed)').text(db.game.squares[$($('.tile:not(completed)')[0]).data('position')-1]).addClass('completed');
+    $('.tile:not(.completed)').text(db.game.squaresRemaining[0]).addClass('completed');
     alert('FINISHED!');
   }
 }
