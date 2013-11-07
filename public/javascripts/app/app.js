@@ -36,16 +36,20 @@ function clickTile(){
     var position = $(this).data('position');
     $(this).toggleClass('selected');
     var tileValue = db.game.squares[position];
+    $(this).text(tileValue);
     if(db.game.tile1){
       db.game.tile2 = tileValue;
       if(db.game.tile1 === db.game.tile2){
         $('.selected').addClass('completed');
       }else{
         // flip back over after a couple seconds
+        //wait 3 seconds
+        var timer = setTimeOut(function(){$('.selected').text('');},3000);
+
       }
       $('.selected').removeClass('selected');
-      // db.game.tile1 delete;
-      // db.game.tile2 delete;
+      db.game.tile1 = null;
+      db.game.tile2 = null;
     }else{
       db.game.tile1 = tileValue;
     }
