@@ -1,3 +1,4 @@
+
 var db = {};
 db.game = {};
 
@@ -55,3 +56,4 @@ function clickTile(){
     }
   }
 }
+
