@@ -13,14 +13,15 @@ function initialize(){
 function clickNewGame(){
   var player = $('input[name="player"]').val();
   var numOfTiles = parseInt($('input[name="numOfTiles"]').val());
-  var squares = _.range(numOfTiles);
+  var squares = _.range(1,numOfTiles+1);
+  console.log(squares);
   squares = squares.concat(squares);
   db.game.squares = _.shuffle(squares);
   console.log(player,numOfTiles,squares);
   $('#gameHeader').text('Good Luck, ' + player);
   $('#gameForm').fadeOut('slow');
   $('#gameDisplay').show();
-  for(var i = 0; i<db.game.squares.length;i++){
+  for(var i = 1; i<db.game.squares.length+1;i++){
     var $tile = $('<div>')
     $tile.attr('data-position', i);
     $tile.addClass('tile');
@@ -43,8 +44,8 @@ function clickTile(){
         // flip back over after a couple seconds
       }
       $('.selected').removeClass('selected');
-      db.game.tile1 delete;
-      db.game.tile2 delete;
+      // db.game.tile1 delete;
+      // db.game.tile2 delete;
     }else{
       db.game.tile1 = tileValue;
     }
