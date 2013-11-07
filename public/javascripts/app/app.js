@@ -79,7 +79,8 @@ function clearBothTiles(){
 
 
 function checkForCompletion(){
-  if($('.completed').length === db.game.squares.length){
+  if($('.completed').length === db.game.squares.length-2){
+    $('.tile:not(.completed)').text(db.game.squares[$($('.tile:not(completed)')[0]).data('position')-1]).addClass('completed');
     alert('FINISHED!');
   }
 }
