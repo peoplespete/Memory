@@ -14,6 +14,8 @@ function clickNewGame(){
   squares = squares.concat(squares);
   squares = _.shuffle(squares);
   console.log(player,numOfTiles,squares);
+  $('#gameHeader').text('Good Luck, ' + player);
+  $('#gameForm').fadeOut('slow');
   $('#gameDisplay').show();
   for(var i = 0; i<squares.length;i++){
     var $tile = $('<div>')
