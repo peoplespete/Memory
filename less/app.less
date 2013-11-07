@@ -1,5 +1,48 @@
-@base: #f938ab;
+// VARIABLES
+
+@base: #222;
+@import url(http://fonts.googleapis.com/css?family=Jolly+Lodger);
+@jolly:  'Jolly Lodger', cursive;
+@spookyYellow: #C8B35D;
+@yellowGlow: 2px 2px 10px #C8B35D;
+@dropshadow: 0px 4px 2px #000;
+
+// BODY BACKGROUND IMAGE STYLING
 
 body{
-  background-color: @base;
+  background: url('../images/grave.jpeg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+// HEADER STYLING
+
+h1#gameHeader{
+	font-family: @jolly;
+	color: @spookyYellow;
+	text-shadow: @dropshadow;
+	text-align: center;
+	font-size: 50px;
+}
+
+
+// FORM ELEMENT STYLING
+
+#gameForm{
+	background-color: rgba(115, 115, 82, 0.5);
+	box-shadow: @dropshadow;
+
+	fieldset{
+		border:0px;
+	}
+
+	label{
+		color:@spookyYellow;
+		font-weight: bold;
+		font-size: 20px;
+		text-shadow: @dropshadow;
+	}
+	input[type='text']
 }
