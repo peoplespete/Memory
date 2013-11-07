@@ -1,6 +1,10 @@
 
 var db = {};
 db.game = {};
+db.game.numSelected = 0;
+db.game.tile1 = {};
+db.game.tile2 = {};
+
 
 $(document).ready(initialize);
 
@@ -12,6 +16,7 @@ function initialize(){
 
 
 function clickNewGame(){
+  $('#newGame').off('click');
   var player = $('input[name="player"]').val();
   var numOfTiles = parseInt($('input[name="numOfTiles"]').val());
   var squares = _.range(1,numOfTiles+1);
@@ -33,27 +38,48 @@ function clickNewGame(){
 
 
 function clickTile(){
-  if(!db.game.tile2){
+  if(db.game.numSelected < 2 && $(this).hasClass('tile')  && !$(this).hasClass('selected')  && !$(this).hasClass('completed')){
     var position = $(this).data('position');
-    $(this).toggleClass('selected');
-    var tileValue = db.game.squares[position];
-    $(this).text(tileValue);
-    if(db.game.tile1){
-      db.game.tile2 = tileValue;
-      if(db.game.tile1 === db.game.tile2){
+    var tileValue = db.game.squares[position-1];
+    if(db.game.numSelected === 1 && (position !== db.game.tile1.position)){
+      db.game.numSelected++;
+      $(this).addClass('selected').text(tileValue);
+      db.game.tile2.value = tileValue;
+      db.game.tile2.position = position;
+      if(db.game.tile1.value === db.game.tile2.value){
         $('.selected').addClass('completed');
+        $('.selected').removeClass('selected');
+        clearBothTiles();
+        db.game.numSelected = 0;
+        checkForCompletion();
       }else{
-        // flip back over after a couple seconds
-        //wait 3 seconds
-        var timer = setTimeOut(function(){$('.selected').text('');},3000);
-
+        var timer = setTimeout(function(){
+          $('.selected').text('');
+          $('.selected').removeClass('selected');
+          clearBothTiles();
+          db.game.numSelected = 0;
+        }, 1500);
       }
-      $('.selected').removeClass('selected');
-      db.game.tile1 = null;
-      db.game.tile2 = null;
     }else{
-      db.game.tile1 = tileValue;
+      $(this).addClass('selected').text(tileValue);
+      db.game.tile1.value = tileValue;
+      db.game.tile1.position = position;
+      db.game.numSelected++;
     }
   }
 }
 
+function clearBothTiles(){
+  db.game.tile1.value = null;
+  db.game.tile1.position = null;
+  db.game.tile2.value = null;
+  db.game.tile2.position = null;
+}
+
+
+
+function checkForCompletion(){
+  if($('.completed').length === db.game.squares.length){
+    alert('FINISHED!');
+  }
+}
